@@ -17,14 +17,16 @@ cache:
 before_cache:
   - rm -rf /home/travis/.cargo/registry
 before_script:
-  - export PATH=$HOME/.cargo/bin:$PATH
-  - mkdir $(pwd)/socket
-  - export XDG_RUNTIME_DIR="$(pwd)/socket"
-  - cargo fetch
   - |
-    rustup component add rustfmt-preview
-    if [ -n "$CLIPPY" ]; then
-      rustup component add clippy
+    if command -v cargo >/dev/null; then
+      export PATH=$HOME/.cargo/bin:$PATH
+      mkdir $(pwd)/socket
+      export XDG_RUNTIME_DIR="$(pwd)/socket"
+      cargo fetch
+      rustup component add rustfmt-preview
+      if [ -n "$CLIPPY" ]; then
+        rustup component add clippy
+      fi
     fi
 script:
   - |
@@ -35,7 +37,7 @@ script:
       cargo clippy --all -- -D warnings \
         -A clippy::deprecated_cfg_attr \
         -A clippy::for_loop_over_option
-    else
+    elif [ -n "$FEATURES" ]; then
       cargo test --all --features "$FEATURES"
     fi
 
@@ -43,11 +45,13 @@ matrix:
   include:
     - rust: stable
       env: BUILD_FMT=1
+    - rust: stable
+      env: CLIPPY=1
+    - rust: stable
+      env: FEATURES=''
       notifications:
         slack:
           secure: 'UzMDp+QAQmykQRh3X2zPZnxICvEH9YPynCPQ6AEsmdVb9Or3VleaYM8i+E7x5jT1HFloBJyI1G0mqrFQIbYDQug5nFUsfB2CYi7L0dpUtvoWbDMGoJ/lDI/wJDt64lqhHf9hs1aeYq454Zqcmx6/oKCgnRSyXip6y/mtOlQYjwhGN0D+TARF+6IohqJMg5iEQg4sWvugVur3GbFbatNeevLOYuhezdun4S8vhzQKsFJBK5QnIuufEyeHHjA3Ii5/yyqXUnxtRnLctjPWR+EROBO/mgqBUXPTwheiYqg9Gw9lYSRuBrtP+eixSKWnknju12YzlhAIF/HegRGzLG2PUGgLuB0TBAraaLYOODpBanVfN7DMvhg72Embdy0lZzVYPN8ImwGIU7jisWPI3x6Zz3zdI1lXZaMFS2ijlbRbYZE1YoOhS0iFQuYUc4dwu+D9Ql+IqZZ+BwE5AOy3cY149WrwGX0xaqwPad80HNHy5PUKKLxE8ZLXD0AQsWxi5M7UrHvJ7XOMRPEkskm6zNBuSXrU1vRibbtOaAC+xdPWop5j0Chf99CuIyH6NeqWVwpvl8ddTJGFZeoNXBXOp6+WAxyAJa1Z77rOvmjhdgrvcFh0o3176KCpFBQM0rWt1IVy1LFFsCP9KzMjBN1vAeEaCJZF0yQjXg/58lUTnR5a28A='
-    - rust: stable
-      env: CLIPPY=1
     - language: python
       sudo: required
       dist: xenial
