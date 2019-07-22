@@ -101,3 +101,35 @@ impl Display for Error {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+
+    use super::*;
+
+    fn t_none_error() -> Result<()> {
+        Err(Error::NoneError {})
+    }
+    fn t_unsupported() -> Result<()> {
+        Err(Error::Unsupported("unsupported".into()))
+    }
+    fn t_reportable_bug() -> Result<()> {
+        Err(Error::ReportableBug("reportable bug".into()))
+    }
+
+    #[test]
+    fn test_error_enum() {
+        match t_none_error() {
+            Err(Error::NoneError {}) => (),
+            _ => panic!("wrong error returned"),
+        }
+        match t_unsupported() {
+            Err(Error::Unsupported(x)) => assert_eq!(x, "unsupported".to_owned()),
+            _ => panic!("wrong error returned"),
+        }
+        match t_reportable_bug() {
+            Err(Error::ReportableBug(x)) => assert_eq!(x, "reportable bug".to_owned()),
+            _ => panic!("wrong error returned"),
+        }
+    }
+}
