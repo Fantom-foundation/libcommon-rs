@@ -1,3 +1,6 @@
+// Idea borrowed from spacejam/sled,
+// https://github.com/spacejam/sled/blob/1d331eb8138be2620c4f1cf4737e754ceccabb07/crates/pagecache/src/result.rs
+
 use std::{
     cmp::PartialEq,
     error::Error as StdError,
@@ -46,13 +49,7 @@ impl PartialEq for Error {
     fn eq(&self, other: &Error) -> bool {
         match *self {
             // Add here variants for new Error enum members when needed.
-            NoneError => {
-                if let NoneError = *other {
-                    true
-                } else {
-                    false
-                }
-            }
+            NoneError => true,
             Unsupported(ref l) => {
                 if let Unsupported(ref r) = *other {
                     l == r
