@@ -6,6 +6,7 @@ use std::{
 };
 
 /// The top-level result type for dealing with Offscale.io stack.
+#[allow(dead_code)]
 pub type Result<T> = std::result::Result<T, Error>;
 
 /// An Error type encapsulating various issues that may come up
@@ -13,10 +14,13 @@ pub type Result<T> = std::result::Result<T, Error>;
 #[derive(Debug)]
 pub enum Error {
     /// Not an error; usually means option None when no error detected.
+    #[allow(dead_code)]
     NoneError,
     /// The system has been used in an unsupported way.
+    #[allow(dead_code)]
     Unsupported(String),
     /// An unexpected bug has happened. Please open an issue on github!
+    #[allow(dead_code)]
     ReportableBug(String),
     /// A read or write error has happened when interacting with the file system.
     Io(io::Error),
