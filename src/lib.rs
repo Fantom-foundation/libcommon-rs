@@ -1,4 +1,5 @@
 pub mod errors;
+pub mod peer;
 
 #[cfg(test)]
 mod tests {

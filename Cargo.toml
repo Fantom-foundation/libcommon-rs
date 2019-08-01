@@ -5,3 +5,4 @@ authors = ["Samuel Marks <@SamuelMarks>"]
 edition = "2018"
 
 [dependencies]
+serde = { version = "1.0.97", features = ["derive"] }
