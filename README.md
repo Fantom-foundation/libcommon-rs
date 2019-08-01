@@ -1,8 +1,8 @@
-fantom-common-rs
+libcommon-rs
 ===========
-[![Build Status](https://travis-ci.org/Fantom-foundation/fantom-common-rs.svg?branch=master)](https://travis-ci.org/Fantom-foundation/fantom-common-rs)
+[![Build Status](https://travis-ci.org/Fantom-foundation/libcommon-rs.svg?branch=master)](https://travis-ci.org/Fantom-foundation/libcommon-rs)
 
-fantom-common-rs in Rust.
+libcommon-rs in Rust.
 
 ## RFCs
 
@@ -25,7 +25,7 @@ $ cargo install --force cargo-make
 # Install rustfmt (Rust formatter)
 $ rustup component add rustfmt
 # Clone this repo
-$ git clone https://github.com/Fantom-foundation/fantom-common-rs && cd fantom-common-rs
+$ git clone https://github.com/Fantom-foundation/libcommon-rs && cd libcommon-rs
 # Run tests
 $ cargo test
 # Format, build and test

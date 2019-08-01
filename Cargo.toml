@@ -1,5 +1,5 @@
 [package]
-name = "fantom-common-rs"
+name = "libcommon-rs"
 version = "0.0.1"
 authors = ["Samuel Marks <@SamuelMarks>"]
 edition = "2018"
