@@ -1,8 +1,9 @@
-use serde::{Deserialize, Serialize};
+use serde::de::DeserializeOwned;
+use serde::Serialize;
 use std::fmt::Debug;
 
-pub trait PeerId: Eq + Ord + Clone + Debug + Send + Serialize + Sync {}
-impl<N> PeerId for N where N: Eq + Ord + Clone + Debug + Send + Serialize + Sync {}
+pub trait PeerId: Eq + Ord + Clone + Debug + Send + Serialize + DeserializeOwned + Sync {}
+impl<N> PeerId for N where N: Eq + Ord + Clone + Debug + Send + Serialize + DeserializeOwned + Sync {}
 
 //#[derive(Clone, Debug, Serialize, Deserialize)]
 //pub struct Peer<Id: PeerId> {
