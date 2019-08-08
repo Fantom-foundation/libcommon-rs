@@ -20,7 +20,9 @@ pub trait Peer<Id: PeerId> {
     fn get_net_addr(&self) -> String;
 }
 
-pub trait PeerList<Id: PeerId, Error>: IntoIterator {
+pub trait PeerList<Id: PeerId, Error> {
+    type IterType: Iterator;
     fn add(&mut self, p: dyn Peer<Id>) -> std::result::Result<(), Error>;
     fn get_peers_from_file(&mut self, json_peer_path: String) -> std::result::Result<(), Error>;
+    fn iter<'a>(&'a self) -> Self::IterType;
 }
