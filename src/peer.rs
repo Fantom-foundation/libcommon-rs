@@ -1,4 +1,4 @@
-use core::slice::Iter;
+use core::slice::{Iter, IterMut};
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 use std::fmt::Debug;
@@ -22,23 +22,9 @@ pub trait Peer<Id: PeerId> {
 }
 
 pub trait PeerList<Id: PeerId, Error> {
-    // FIXME: we need iter() call implemented in PeerList trait, however
-    // we need lifetime parametrised iterator type returned by iter() but
-    // Rust currently having unstable generic associated types and produce the
-    // following error in an implementation:
-    //error[E0109]: lifetime arguments are not allowed for this type
-    //   --> src/lib.rs:122:49
-    //    |
-    //122 |         fn iter<'a>(&'a self) -> Self::IterType<'a> {
-    //    |                                                 ^^ lifetime argument not allowed
-    //
-    // so we leave it for future formal specification, but iter() must be provided in
-    // every implementation of PeerList trait.
-    //type IterType: Iterator;
     type P: Peer<Id>;
     fn add(&mut self, peer: Self::P) -> std::result::Result<(), Error>;
     fn get_peers_from_file(&mut self, json_peer_path: String) -> std::result::Result<(), Error>;
     fn iter(&self) -> Iter<'_, Self::P>;
-    //fn iter<'a>(&'a self) -> dyn Iterator<Item = &'a Self::P>;
-    //fn iter<'a>(&'a self) -> Self::IterType;
+    fn iter_mut(&mut self) -> IterMut<'_, Self::P>;
 }
