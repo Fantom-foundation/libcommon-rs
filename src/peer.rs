@@ -17,6 +17,7 @@ impl<N> PeerId for N where N: Eq + Ord + Clone + Debug + Send + Serialize + Dese
 //}
 
 pub trait Peer<Id: PeerId> {
+    fn new(id: Id, net_addr: String) -> Self;
     fn get_id(&self) -> Id;
     fn get_net_addr(&self) -> String;
 }
