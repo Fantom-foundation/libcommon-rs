@@ -24,6 +24,7 @@ pub trait Peer<Id: PeerId> {
 
 pub trait PeerList<Id: PeerId, Error> {
     type P: Peer<Id>;
+    fn new() -> Self;
     fn add(&mut self, peer: Self::P) -> std::result::Result<(), Error>;
     fn get_peers_from_file(&mut self, json_peer_path: String) -> std::result::Result<(), Error>;
     fn iter(&self) -> Iter<'_, Self::P>;
