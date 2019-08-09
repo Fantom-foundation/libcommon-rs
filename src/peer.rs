@@ -1,3 +1,4 @@
+use core::slice::Iter;
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 use std::fmt::Debug;
@@ -37,6 +38,7 @@ pub trait PeerList<Id: PeerId, Error> {
     type P: Peer<Id>;
     fn add(&mut self, peer: Self::P) -> std::result::Result<(), Error>;
     fn get_peers_from_file(&mut self, json_peer_path: String) -> std::result::Result<(), Error>;
-    fn iter<'a>(&'a self) -> dyn Iterator<Item = &'a Self::P>;
+    fn iter(&self) -> Iter<'_, Self::P>;
+    //fn iter<'a>(&'a self) -> dyn Iterator<Item = &'a Self::P>;
     //fn iter<'a>(&'a self) -> Self::IterType;
 }
