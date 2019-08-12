@@ -2,6 +2,7 @@ use core::slice::{Iter, IterMut};
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 use std::fmt::Debug;
+use std::ops::{Index, IndexMut};
 
 pub trait PeerId: Eq + Ord + Clone + Debug + Send + Serialize + DeserializeOwned + Sync {}
 impl<N> PeerId for N where N: Eq + Ord + Clone + Debug + Send + Serialize + DeserializeOwned + Sync {}
@@ -22,7 +23,7 @@ pub trait Peer<Id: PeerId> {
     fn get_net_addr(&self) -> String;
 }
 
-pub trait PeerList<Id: PeerId, Error> {
+pub trait PeerList<Id: PeerId, Error>: Index<usize> + IndexMut<usize> {
     type P: Peer<Id>;
     fn new() -> Self;
     fn add(&mut self, peer: Self::P) -> std::result::Result<(), Error>;
