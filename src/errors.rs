@@ -1,6 +1,15 @@
+/// # Fantom libconsensus/errors.rs
+///
+/// This module defines a set of error definitions and handling capabilities. As of now, this crate
+/// supports four types of errors:
+///
+/// None: Not an error
+/// Unsupported: Users have tried to use the system in a way that is not supported.
+/// ReportableBug: An unexpected bug occurred and an isue should be opened in github.
+/// IO: A read/write error has happened within the file system.
+
 // Idea borrowed from spacejam/sled,
 // https://github.com/spacejam/sled/blob/1d331eb8138be2620c4f1cf4737e754ceccabb07/crates/pagecache/src/result.rs
-
 use std::{
     cmp::PartialEq,
     error::Error as StdError,
@@ -31,6 +40,7 @@ pub enum Error {
 
 use self::Error::*;
 
+/// Allows the Error type to be cloned (specifically, allows its contents to be cloned)
 impl Clone for Error {
     fn clone(&self) -> Error {
         match self {
@@ -43,9 +53,12 @@ impl Clone for Error {
     }
 }
 
+/// Allows equality operators to happen with Error
 impl Eq for Error {}
 
+/// Additional equality operations which can occur with Error.
 impl PartialEq for Error {
+    /// checsk for equality in type and contents within the Error.
     fn eq(&self, other: &Error) -> bool {
         match *self {
             // Add here variants for new Error enum members when needed.
@@ -69,6 +82,7 @@ impl PartialEq for Error {
     }
 }
 
+/// Allows Error to be transformed into a IO Error.
 impl From<io::Error> for Error {
     #[inline]
     fn from(io_error: io::Error) -> Error {
@@ -87,6 +101,7 @@ impl StdError for Error {
     }
 }
 
+/// Allows the error to be displayed on console and used in println statements.
 impl Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> std::result::Result<(), fmt::Error> {
         match *self {
