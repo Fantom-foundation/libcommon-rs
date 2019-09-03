@@ -18,7 +18,7 @@ There are plenty of [IDEs](https://areweideyet.com) and other [Rust development 
 
 ### Description
 
-This library defines a set of traits for handling distributed networking, including the
+This library defines a set of commonly used traits for handling distributed networking, including the
 storage and configuration of individual peers across a single network. The crate strictly
 defines traits, namely the Peer, PeerId, and PeerList traits, it is up to the developer to implement
 these traits for their individual use.
