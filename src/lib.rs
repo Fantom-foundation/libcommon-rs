@@ -6,3 +6,6 @@
 /// these traits for their use.
 pub mod errors;
 pub mod peer;
+
+// Stub trait for HRTB for struct without any other trait implementation
+pub trait Stub {}
