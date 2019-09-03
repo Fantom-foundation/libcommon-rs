@@ -1,11 +1,18 @@
+use core::hash::Hash;
 use core::slice::{Iter, IterMut};
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 use std::fmt::Debug;
 use std::ops::{Index, IndexMut};
 
-pub trait PeerId: Eq + Ord + Clone + Debug + Send + Serialize + DeserializeOwned + Sync {}
-impl<N> PeerId for N where N: Eq + Ord + Clone + Debug + Send + Serialize + DeserializeOwned + Sync {}
+pub trait PeerId:
+    Eq + Ord + Clone + Debug + Send + Serialize + DeserializeOwned + Sync + Hash
+{
+}
+impl<N> PeerId for N where
+    N: Eq + Ord + Clone + Debug + Send + Serialize + DeserializeOwned + Sync + Hash
+{
+}
 
 //#[derive(Clone, Debug, Serialize, Deserialize)]
 //pub struct Peer<Id: PeerId> {
