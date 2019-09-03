@@ -4,7 +4,6 @@
 ///  - PeerID: Identified individual peers in the network
 ///  - Peer: Defines what a peer's essential behaviours.
 ///  - PeerList: Defines a storage of all peers and how it should operate.
-
 use core::slice::{Iter, IterMut};
 use serde::de::DeserializeOwned;
 use serde::Serialize;

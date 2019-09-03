@@ -7,7 +7,6 @@
 /// Unsupported: Users have tried to use the system in a way that is not supported.
 /// ReportableBug: An unexpected bug occurred and an isue should be opened in github.
 /// IO: A read/write error has happened within the file system.
-
 // Idea borrowed from spacejam/sled,
 // https://github.com/spacejam/sled/blob/1d331eb8138be2620c4f1cf4737e754ceccabb07/crates/pagecache/src/result.rs
 use std::{
@@ -120,7 +119,6 @@ impl Display for Error {
 
 #[cfg(test)]
 mod tests {
-
     use super::*;
 
     fn t_none_error() -> Result<()> {
