@@ -4,6 +4,7 @@
 ///  - PeerID: Identified individual peers in the network
 ///  - Peer: Defines what a peer's essential behaviours.
 ///  - PeerList: Defines a storage of all peers and how it should operate.
+use core::fmt::Display;
 use core::hash::Hash;
 use core::slice::{Iter, IterMut};
 use serde::de::DeserializeOwned;
@@ -13,11 +14,11 @@ use std::ops::{Index, IndexMut};
 
 /// Allows a type to be implemented for a PeerID.
 pub trait PeerId:
-    Eq + Ord + Clone + Debug + Send + Serialize + DeserializeOwned + Sync + Hash
+    Eq + Ord + Clone + Debug + Send + Serialize + DeserializeOwned + Sync + Hash + Display
 {
 }
 impl<N> PeerId for N where
-    N: Eq + Ord + Clone + Debug + Send + Serialize + DeserializeOwned + Sync + Hash
+    N: Eq + Ord + Clone + Debug + Send + Serialize + DeserializeOwned + Sync + Hash + Display
 {
 }
 
