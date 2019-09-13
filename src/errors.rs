@@ -14,6 +14,7 @@ use std::{
     error::Error as StdError,
     fmt::{self, Display},
     io,
+    option::NoneError,
 };
 
 /// The top-level result type for dealing with Offscale.io stack.
@@ -26,7 +27,7 @@ pub type Result<T> = std::result::Result<T, Error>;
 pub enum Error {
     /// Not an error; usually means option None when no error detected.
     #[allow(dead_code)]
-    NoneError,
+    NoneError(NoneError),
     /// The system has been used in an unsupported way.
     #[allow(dead_code)]
     Unsupported(String),
@@ -44,7 +45,7 @@ impl Clone for Error {
     fn clone(&self) -> Error {
         match self {
             // Add here variants for new Error enum members when needed.
-            NoneError => NoneError,
+            Error::NoneError(error) => Error::NoneError(error.clone()),
             Unsupported(why) => Unsupported(why.clone()),
             ReportableBug(what) => ReportableBug(what.clone()),
             Io(ioe) => Io(std::io::Error::new(ioe.kind(), format!("{:?}", ioe))),
@@ -61,7 +62,13 @@ impl PartialEq for Error {
     fn eq(&self, other: &Error) -> bool {
         match *self {
             // Add here variants for new Error enum members when needed.
-            NoneError => true,
+            Error::NoneError(ref l) => {
+                if let Error::NoneError(r) = other {
+                    l == r
+                } else {
+                    false
+                }
+            }
             Unsupported(ref l) => {
                 if let Unsupported(ref r) = *other {
                     l == r
@@ -89,10 +96,17 @@ impl From<io::Error> for Error {
     }
 }
 
+impl From<NoneError> for Error {
+    #[inline]
+    fn from(none_error: NoneError) -> Error {
+        Error::NoneError(none_error)
+    }
+}
+
 impl StdError for Error {
     fn description(&self) -> &str {
         match *self {
-            NoneError => "Not an error.",
+            Error::NoneError(ref e) => "Not an error.",
             Unsupported(ref e) => &*e,
             ReportableBug(ref e) => &*e,
             Io(ref e) => e.description(),
@@ -104,7 +118,7 @@ impl StdError for Error {
 impl Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> std::result::Result<(), fmt::Error> {
         match *self {
-            NoneError => write!(f, "Not an error."),
+            Error::NoneError(ref e) => write!(f, "Not an error."),
             Unsupported(ref e) => write!(f, "Unsupported: {}", e),
             ReportableBug(ref e) => write!(
                 f,
@@ -122,7 +136,7 @@ mod tests {
     use super::*;
 
     fn t_none_error() -> Result<()> {
-        Err(Error::NoneError {})
+        Err(Error::NoneError(NoneError))
     }
     fn t_unsupported() -> Result<()> {
         Err(Error::Unsupported("unsupported".into()))
@@ -134,7 +148,7 @@ mod tests {
     #[test]
     fn test_error_enum() {
         match t_none_error() {
-            Err(Error::NoneError {}) => (),
+            Err(Error::NoneError(x)) => assert_eq!(x, NoneError),
             _ => panic!("wrong error returned"),
         }
         match t_unsupported() {
