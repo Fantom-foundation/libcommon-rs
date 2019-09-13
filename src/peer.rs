@@ -35,7 +35,7 @@ impl<N> PeerId for N where
 
 /// Defines a networked peer's shared functionality. A peer requires an Id type to be defined before
 /// usage.
-pub trait Peer<Id: PeerId> {
+pub trait Peer<Id: PeerId, Error> {
     /// Creates a new peer, requires an Id type (as defined in implementation), and a net address
     /// as a String.
     fn new(id: Id, base_addr: String) -> Self;
@@ -45,12 +45,14 @@ pub trait Peer<Id: PeerId> {
     fn get_base_addr(&self) -> String;
     /// Returns the peer's nth net address.
     fn get_net_addr(&self, n: usize) -> String;
+    /// Set the peer's nth net address.
+    fn set_net_addr(&mut self, n: usize, addr: String) -> std::result::Result<(), Error>;
 }
 
 /// Defines a list of peers which message and interface over a network.
 /// Each PeerList requires the definition of a shared ID type, as well as indexing implementations.
 pub trait PeerList<Id: PeerId, Error>: Index<usize> + IndexMut<usize> {
-    type P: Peer<Id>;
+    type P: Peer<Id, Error>;
     /// Creates a new PeerList. Takes no input.
     fn new() -> Self;
     /// Add a new peer to the list. Returns an Error.

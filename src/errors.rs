@@ -106,7 +106,7 @@ impl From<NoneError> for Error {
 impl StdError for Error {
     fn description(&self) -> &str {
         match *self {
-            Error::NoneError(ref e) => "Not an error.",
+            Error::NoneError(ref _e) => "Not an error.",
             Unsupported(ref e) => &*e,
             ReportableBug(ref e) => &*e,
             Io(ref e) => e.description(),
@@ -118,7 +118,7 @@ impl StdError for Error {
 impl Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> std::result::Result<(), fmt::Error> {
         match *self {
-            Error::NoneError(ref e) => write!(f, "Not an error."),
+            Error::NoneError(ref _e) => write!(f, "Not an error."),
             Unsupported(ref e) => write!(f, "Unsupported: {}", e),
             ReportableBug(ref e) => write!(
                 f,

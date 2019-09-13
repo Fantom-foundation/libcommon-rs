@@ -20,7 +20,7 @@ mod tests {
     fn test_none() -> Result<(), errors::Error> {
         let option = Some(2);
 
-        let unwrapped = option?;
+        let _unwrapped = option?;
 
         Ok(())
     }
