@@ -1,3 +1,4 @@
+#![feature(try_trait)]
 /// # Fantom limcommon-rs
 ///
 /// This library defines a set of commonly used traits for handling distributed networking, including the
@@ -9,3 +10,18 @@ pub mod peer;
 
 // Stub trait for HRTB for struct without any other trait implementation
 pub trait Stub {}
+
+/// Tests
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_none() -> Result<(), errors::Error> {
+        let option = Some(2);
+
+        let unwrapped = option?;
+
+        Ok(())
+    }
+}
