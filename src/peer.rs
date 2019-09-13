@@ -29,7 +29,8 @@ impl<N> PeerId for N where
 //    pub id: Id,
 //    // network / transport address of the peer, in URI format, https://tools.ietf.org/html/rfc3986
 //    #[serde(rename = "NetAddr")]
-//    pub net_addr: String,
+//    pub base_addr: String,
+//    pub net_addr: Vec<String>,
 //}
 
 /// Defines a networked peer's shared functionality. A peer requires an Id type to be defined before
@@ -37,11 +38,13 @@ impl<N> PeerId for N where
 pub trait Peer<Id: PeerId> {
     /// Creates a new peer, requires an Id type (as defined in implementation), and a net address
     /// as a String.
-    fn new(id: Id, net_addr: String) -> Self;
+    fn new(id: Id, base_addr: String) -> Self;
     /// Returns the Id of the peer.
     fn get_id(&self) -> Id;
-    /// Returns the peer's net address.
-    fn get_net_addr(&self) -> String;
+    /// Returns the peer's base net address.
+    fn get_base_addr(&self) -> String;
+    /// Returns the peer's nth net address.
+    fn get_net_addr(&self, n: usize) -> String;
 }
 
 /// Defines a list of peers which message and interface over a network.
