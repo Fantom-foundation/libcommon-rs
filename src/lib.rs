@@ -5,6 +5,7 @@
 /// storage and configuration of individual peers across a single network. The crate strictly
 /// defines traits, namely to Peer, PeerId, and PeerList traits, it is up to the developer to implement
 /// these traits for their use.
+pub mod data;
 pub mod errors;
 pub mod peer;
 
