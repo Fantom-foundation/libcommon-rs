@@ -14,11 +14,21 @@ use std::ops::{Index, IndexMut};
 
 /// Allows a type to be implemented for a PeerID.
 pub trait PeerId:
-    Eq + Ord + Clone + Debug + Send + Serialize + DeserializeOwned + Sync + Hash + Display
+    Eq + Ord + Clone + Debug + Send + Serialize + DeserializeOwned + Sync + Hash + Display + Default
 {
 }
 impl<N> PeerId for N where
-    N: Eq + Ord + Clone + Debug + Send + Serialize + DeserializeOwned + Sync + Hash + Display
+    N: Eq
+        + Ord
+        + Clone
+        + Debug
+        + Send
+        + Serialize
+        + DeserializeOwned
+        + Sync
+        + Hash
+        + Display
+        + Default
 {
 }
 
