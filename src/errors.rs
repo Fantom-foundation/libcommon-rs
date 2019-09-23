@@ -45,7 +45,7 @@ impl Clone for Error {
     fn clone(&self) -> Error {
         match self {
             // Add here variants for new Error enum members when needed.
-            Error::NoneError(error) => Error::NoneError(error.clone()),
+            Error::NoneError(error) => Error::NoneError(*error),
             Unsupported(why) => Unsupported(why.clone()),
             ReportableBug(what) => ReportableBug(what.clone()),
             Io(ioe) => Io(std::io::Error::new(ioe.kind(), format!("{:?}", ioe))),
