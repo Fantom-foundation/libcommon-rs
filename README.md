@@ -2,7 +2,7 @@ libcommon-rs
 ===========
 [![Build Status](https://travis-ci.org/Fantom-foundation/libcommon-rs.svg?branch=master)](https://travis-ci.org/Fantom-foundation/libcommon-rs)
 
-libcommon-rs in Rust.
+libcommon-rs is a Rust library defining a set of commonly used traits for handling distributed networking, including the storage and configuration of individual peers across a single network. The crate strictly defines traits, namely to Peer, PeerId, and PeerList traits, it is up to the developer to implement these traits for their use.
 
 ## RFCs
 
