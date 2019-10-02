@@ -11,8 +11,6 @@
 // https://github.com/spacejam/sled/blob/1d331eb8138be2620c4f1cf4737e754ceccabb07/crates/pagecache/src/result.rs
 use std::{
     cmp::PartialEq,
-    error::Error as StdError,
-    fmt::{self, Display},
     io,
     option::NoneError,
 };
@@ -23,18 +21,22 @@ pub type Result<T> = std::result::Result<T, Error>;
 
 /// An Error type encapsulating various issues that may come up
 /// in both the expected and unexpected operation of the system.
-#[derive(Debug)]
+#[derive(Debug, Fail)]
 pub enum Error {
     /// Not an error; usually means option None when no error detected.
     #[allow(dead_code)]
+    #[fail(display = "None Error: {:?}", 0)]
     NoneError(NoneError),
     /// The system has been used in an unsupported way.
     #[allow(dead_code)]
+    #[fail(display = "Unsupported: {:?}", 0)]
     Unsupported(String),
     /// An unexpected bug has happened. Please open an issue on github!
     #[allow(dead_code)]
+    #[fail(display = "Reportable bug: {:?}", 0)]
     ReportableBug(String),
     /// A read or write error has happened when interacting with the file system.
+    #[fail(display = "IO Error: {:?}", 0)]
     Io(io::Error),
 }
 
@@ -100,34 +102,6 @@ impl From<NoneError> for Error {
     #[inline]
     fn from(none_error: NoneError) -> Error {
         Error::NoneError(none_error)
-    }
-}
-
-impl StdError for Error {
-    fn description(&self) -> &str {
-        match *self {
-            Error::NoneError(ref _e) => "Not an error.",
-            Unsupported(ref e) => &*e,
-            ReportableBug(ref e) => &*e,
-            Io(ref e) => e.description(),
-        }
-    }
-}
-
-/// Allows the error to be displayed on console and used in println statements.
-impl Display for Error {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> std::result::Result<(), fmt::Error> {
-        match *self {
-            Error::NoneError(ref _e) => write!(f, "Not an error."),
-            Unsupported(ref e) => write!(f, "Unsupported: {}", e),
-            ReportableBug(ref e) => write!(
-                f,
-                "Unexpected bug has happened: {}. \
-                 PLEASE REPORT THIS BUG!",
-                e
-            ),
-            Io(ref e) => write!(f, "IO error: {}", e),
-        }
     }
 }
 
