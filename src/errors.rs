@@ -9,11 +9,7 @@
 /// IO: A read/write error has happened within the file system.
 // Idea borrowed from spacejam/sled,
 // https://github.com/spacejam/sled/blob/1d331eb8138be2620c4f1cf4737e754ceccabb07/crates/pagecache/src/result.rs
-use std::{
-    cmp::PartialEq,
-    io,
-    option::NoneError,
-};
+use std::{cmp::PartialEq, io, option::NoneError};
 
 /// The top-level result type for dealing with Offscale.io stack.
 #[allow(dead_code)]
