@@ -65,9 +65,9 @@ matrix:
       env:
         - COMMENT_EXTRACTION='comment-extraction-master'
         - EXTRACTED_DIR='docs/extracted-comments'
-        - INPUT_DIR='fantom-common-rs/src'
+        - INPUT_DIR='libcommon-rs/src'
         - LANGUAGE='rust'
-        - ROOT_URL='https://github.com/Fantom-Foundation/fantom-common-rs'
+        - ROOT_URL='https://github.com/Fantom-Foundation/libcommon-rs'
       before_install:
         - curl -L https://github.com/dev10/comment-extraction/archive/master.tar.gz -o
           comment-extraction.tgz
