@@ -1,6 +1,6 @@
 libcommon-rs
 ===========
-[![Build Status](https://travis-ci.org/Fantom-foundation/libcommon-rs.svg?branch=master)](https://travis-ci.org/Fantom-foundation/libcommon-rs)
+![Rust: nightly](https://img.shields.io/badge/Rust-nightly-blue.svg) ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg) [![Build Status](https://travis-ci.org/Fantom-foundation/evm-rs.svg?branch=master)](https://travis-ci.org/Fantom-foundation/evm-rs)
 
 libcommon-rs is a Rust library defining a set of commonly used traits for handling distributed networking, including the storage and configuration of individual peers across a single network. The crate strictly defines traits, namely to Peer, PeerId, and PeerList traits, it is up to the developer to implement these traits for their use.
 
@@ -25,9 +25,9 @@ these traits for their individual use.
 
 ### Example Implementation
 
-```
-// Example code extracted from libtransport/generic_tests.rs repository: 
-https://github.com/Fantom-foundation/libtransport/blob/master/src/generic_test.rs
+```rust
+// Example code extracted from libtransport/generic_tests.rs repository:
+// https://github.com/Fantom-foundation/libtransport/blob/master/src/generic_test.rs
 
 // Dummy ID, also uses a u32 for instantiation.
 #[derive(Clone, Debug, Deserialize, Serialize, Eq, Hash, PartialEq, PartialOrd, Ord)]
@@ -116,7 +116,7 @@ impl PeerList<Id, Error> for TestPeerList<Id> {
 ### Step-by-step guide
 ```bash
 # Install Rust (nightly)
-$ curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly
+$ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain nightly
 # Install cargo-make (cross-platform feature-rich reimplementation of Make)
 $ cargo install --force cargo-make
 # Install rustfmt (Rust formatter)
