@@ -11,6 +11,7 @@ extern crate failure;
 pub mod data;
 pub mod errors;
 pub mod peer;
+pub mod store;
 
 // Stub trait for HRTB for struct without any other trait implementation
 pub trait Stub {}
